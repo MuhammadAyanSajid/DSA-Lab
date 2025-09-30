@@ -127,35 +127,35 @@ int main()
     //     cout << students[i].name << " " << students[i].marks << "\n";
     // }
 
-    string s = "ali goes to school and sara goes to market";
-    string word;
-    string wordsArr[50];
-    int count = 0;
+    // string s = "ali goes to school and sara goes to market";
+    // string word;
+    // string wordsArr[50];
+    // int count = 0;
     
-    for (int i = 0; i <= (int)s.length(); ++i) {
-        if (i == (int)s.length() || s[i] == ' ') {
-            if (word.length() > 0) {
-                wordsArr[count++] = word;
-                word.clear();
-            }
-        } else {
-            word += s[i];
-        }
-    }
+    // for (int i = 0; i <= (int)s.length(); ++i) {
+    //     if (i == (int)s.length() || s[i] == ' ') {
+    //         if (word.length() > 0) {
+    //             wordsArr[count++] = word;
+    //             word.clear();
+    //         }
+    //     } else {
+    //         word += s[i];
+    //     }
+    // }
 
-    for (int i = 0; i < count - 1; ++i) {
-        for (int j = 0; j < count - i - 1; ++j) {
-            if (wordsArr[j] > wordsArr[j + 1]) {
-                string tmp = wordsArr[j];
-                wordsArr[j] = wordsArr[j + 1];
-                wordsArr[j + 1] = tmp;
-            }
-        }
-    }
+    // for (int i = 0; i < count - 1; ++i) {
+    //     for (int j = 0; j < count - i - 1; ++j) {
+    //         if (wordsArr[j] > wordsArr[j + 1]) {
+    //             string tmp = wordsArr[j];
+    //             wordsArr[j] = wordsArr[j + 1];
+    //             wordsArr[j + 1] = tmp;
+    //         }
+    //     }
+    // }
 
-    for (int i = 0; i < count; ++i) {
-        if (i) cout << ' ';
-        cout << wordsArr[i];
-    }
-    cout << "\n";
+    // for (int i = 0; i < count; ++i) {
+    //     if (i) cout << ' ';
+    //     cout << wordsArr[i];
+    // }
+    // cout << "\n";
 }
