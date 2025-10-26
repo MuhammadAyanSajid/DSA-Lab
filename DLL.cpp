@@ -9,48 +9,61 @@ public:
     
 };
 
-class DLL
+class DCLL
 {
 
 public:
     node *tail;
-    DLL() : tail(nullptr){}
+    int size;
+    DCLL() : tail(nullptr),size(0){}
     void insertAtHead(node* newNode){
         if(tail!=nullptr){
-            node *rptr = tail;
-            while(rptr->pre!=nullptr)
-                rptr = rptr->pre;
-            newNode->next = rptr;
-            rptr->pre = newNode;
+            node *temp = tail->next;
+            newNode->next = temp;
+            newNode->pre = tail;
+            temp->pre = newNode;
+            tail->next = newNode;
+            size++;
             return;
         }
         tail = newNode;
+        newNode->next = newNode;
+        newNode->pre = newNode;
+        size++;
     }
 
     void insertAtTail(node* newNode){
         if(tail!=nullptr){
-            tail->next=newNode;
+            node *temp = tail->next;
+            newNode->next = temp;
             newNode->pre = tail;
+            temp->pre = newNode;
+            tail->next = newNode;
+            tail = newNode;
+            size++;
+            return;
         }
         tail = newNode;
+        newNode->next = newNode;
+        newNode->pre = newNode;
+        size++;
     }
 
     void insertAtPos(node* newNode, int pos){
-        if(pos==0){
+        if(pos==0||tail==nullptr){
             insertAtHead(newNode);
             return;
         }
         if(tail!=nullptr){
-            int length = 1;
             node *temp = tail;
             while(temp->pre!=nullptr){
                 temp = temp->pre;
-                length++;
             }
-            if(pos >= length){
+            if(pos >= size){
                 insertAtTail(newNode);
                 return;
             }
+            node *temp = tail->next;
             for (int i = 0; i < pos - 1; i++){
                 temp = temp->next;
             }
@@ -58,38 +71,40 @@ public:
             newNode->pre = temp;
             temp->next->pre = newNode;
             temp->next = newNode;
+            size++;
             return;
         }
-        tail = newNode;
     }
     void deleteAtTail(){
         if(tail!=nullptr){
-            if(tail->pre==nullptr){
+            if(tail->next==tail){
                 delete tail;
                 tail = nullptr;
+                size--;
                 return;
             }
             node *temp = tail;
             tail = tail->pre;
-            tail->next = nullptr;
+            tail->next = temp->next;
+            temp->next->pre = tail;
+            size--;
             delete temp;
         }
+        
     }
     void deleteAtHead(){
         if(tail!=nullptr){
-            if(tail->pre==nullptr){
+            if(tail->pre==tail){
                 delete tail;
                 tail = nullptr;
+                size--;
                 return;
             }
-            node *rptr = tail;
-            while(rptr->pre!=nullptr){
-                rptr = rptr->pre;
-            }
-            node *temp = rptr;
-            rptr->next->pre = nullptr;
+            node *temp = tail->next;
+            tail->next = temp->next;
+            temp->next->pre = tail;
             delete temp;
-            
+            size--;
         }
     }
 
@@ -99,16 +114,11 @@ public:
             return;
         }
         if(tail!=nullptr){
-            int length = 1;
-            node *rptr = tail;
-            while(rptr->pre!=nullptr){
-                rptr = rptr->pre;
-                length++;
-            }
-            if(pos >= length-1){
+            if(pos >= size-1){
                 deleteAtTail();
                 return;
             }
+            node *rptr = tail->next;
             for (int i = 0; i < pos-1; i++){
                 rptr = rptr->next;
             }
@@ -116,6 +126,7 @@ public:
             rptr->next = temp->next;
             temp->next->pre=rptr;
             delete temp;
+            size--;
         }
     }
 };
